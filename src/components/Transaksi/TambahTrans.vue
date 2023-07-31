@@ -48,7 +48,60 @@
             Total Harga: {{ formatCurrency(totalBayar) }}
         </v-card-text>
         <v-card-actions>
-            <v-btn @click="submitTransaksi" location="center" variant="outlined" color="blue-darken-4">Konfirmasi</v-btn>
+            <v-btn @click="submitTransaksi(), loadingButton = true" :loading="loadingButton" location="center"
+                variant="outlined" color="blue-darken-4">Konfirmasi</v-btn>
+            <v-dialog class="w-50" v-model="dialogPrint">
+                <v-card>
+                    <v-card>
+                        <v-btn location="top right" position="absolute" icon="mdi-close-circle" color="red" variant="text"
+                            size="x-large" class="mr-4 mt-2" @click="closeDialog()"></v-btn>
+                        <div id="printContent">
+                            <v-container>
+                                <div class="text-center">
+                                    <div class="text-h6">Kantin Barokah</div>
+                                    <div class="text-caption">RS PKU Muhammadiyah Gamping</div>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-caption">Tanggal: {{ formattedDate(afterSubmit[0].tanggal) }}</div>
+                                    <div class="text-caption">Nomor Nota: {{ afterSubmit[0].id }}</div>
+                                </div>
+                                <v-table>
+                                    <thead class="text-body-2">
+                                        <tr>
+                                            <th class="text-left">
+                                                Barang
+                                            </th>
+                                            <th class="text-left">
+                                                Harga (pcs)
+                                            </th>
+                                            <th class="text-left">
+                                                Jumlah
+                                            </th>
+                                            <th class="text-left">
+                                                Total
+                                            </th>
+                                            <th class="text-left">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-body-2">
+                                        <tr v-for="item in totalItem" :key="item.id_barang">
+                                            <td>{{ item.barang }}</td>
+                                            <td>{{ formatCurrency(item.harga_jual) }}</td>
+                                            <td>{{ item.Jumlah }}</td>
+                                            <td>{{ formatCurrency(item.total_harga) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </v-table>
+                                <div class="text-body-2 mt-4 text-right">Total Harga: {{ afterSubmit[0].total_harga }}</div>
+                            </v-container>
+                        </div>
+                    </v-card>
+                    <v-card-action class="mx-auto my-4">
+                        <v-btn v-print="'#printContent'" color="blue">Print</v-btn>
+                    </v-card-action>
+                </v-card>
+            </v-dialog>
         </v-card-actions>
     </v-card>
 </template>
@@ -56,16 +109,24 @@
 import { useEnvStore } from '@/store/envStore'
 import { useTimeStore } from '@/store/timeStore'
 import axios from 'axios'
+import print from 'vue3-print-nb'
+import moment from 'moment/min/moment-with-locales'
 export default {
+    directives: {
+        print
+    },
     data() {
         return {
+            dialogPrint: false,
+            loadingButton: false,
             selected: null,
             jumlah: null,
             dataBarang: [],
             totalItem: [],
             totalBayar: null,
             childDialogTambah: true,
-            waktu: null
+            waktu: null,
+            afterSubmit: []
         }
     },
     methods: {
@@ -123,12 +184,17 @@ export default {
                     }
                 })
                 .then((res) => {
-                    console.log(res)
-                    this.closeDialog()
+                    this.afterSubmit = res.data.data
+                    this.loadingButton = false
+                    this.dialogPrint = true
                 })
                 .catch((err) => {
                     console.log(err)
                 })
+        },
+        formattedDate(value) {
+            moment.locale('id')
+            return moment(value).format('D MMMM YYYY [Jam] HH:mm:s')
         },
         formatCurrency(value) {
             return new Intl.NumberFormat('id-ID', {
@@ -143,3 +209,4 @@ export default {
     },
 }
 </script>
+<style></style>

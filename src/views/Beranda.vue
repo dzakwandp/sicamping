@@ -9,6 +9,8 @@
 
   <v-container class="d-flex flex-row justify-center">
     <v-card class="w-100 mr-4" variant="tonal" color="deep-purple">
+      <v-btn position="absolute" location="right top" icon="mdi-refresh-circle" variant="icon" color="deep-purple"
+        @click="loading = true, getPenjualan()"></v-btn>
       <v-card-title>Total Penjualan Hari Ini</v-card-title>
       <v-card-text class="text-center">
         <v-progress-circular v-if=loading color="deep-purple" :size="128" :width="12" indeterminate></v-progress-circular>

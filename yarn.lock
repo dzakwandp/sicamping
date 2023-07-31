@@ -1346,7 +1346,14 @@ vue3-easy-data-table@^1.5.47:
   dependencies:
     vue "^3.2.45"
 
-vue@^3.2.0, vue@^3.2.45:
+vue3-print-nb@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vue3-print-nb/-/vue3-print-nb-0.1.4.tgz#11ee3ef8857c34b403fb782da722e82ab7e20952"
+  integrity sha512-LExI7viEzplR6ZKQ2b+V4U0cwGYbVD4fut/XHvk3UPGlT5CcvIGs6VlwGp107aKgk6P8Pgx4rco3Rehv2lti3A==
+  dependencies:
+    vue "^3.0.5"
+
+vue@^3.0.5, vue@^3.2.0, vue@^3.2.45:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
   integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==
