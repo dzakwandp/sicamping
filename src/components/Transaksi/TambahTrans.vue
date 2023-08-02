@@ -66,24 +66,18 @@
                                     <div class="text-id">No: {{ afterSubmit[0].id }}</div>
                                 </div>
                                 <hr class="dashed">
-                                <v-table>
-                                    <thead>
-                                        <tr>
-                                            <th class="text-item-head-left">
-                                                Barang
-                                            </th>
-                                            <th class="text-item-head-right">
-                                                Total
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="item in totalItem" :key="item.id_barang">
-                                            <td class="text-item-left">{{ item.barang + " x" + item.Jumlah }}</td>
-                                            <td class="text-item-right">{{ formatCurrency(item.total_harga) }}</td>
-                                        </tr>
-                                    </tbody>
-                                </v-table>
+                                <v-row>
+                                    <v-col class="text-item-head-left">
+                                        Barang
+                                    </v-col>
+                                    <v-col class="text-item-head-right">
+                                        Total
+                                    </v-col>
+                                </v-row>
+                                <v-row v-for="item in totalItem" :key="item.id_barang">
+                                    <v-col class="text-item-left">{{ item.barang + " x" + item.Jumlah }}</v-col>
+                                    <v-col class="text-item-right">{{ formatCurrency(item.total_harga) }}</v-col>
+                                </v-row>
                                 <hr class="dashed">
                                 <div class="text-total">Total Harga: {{ formatCurrency(afterSubmit[0].total_harga) }}
                                 </div>
