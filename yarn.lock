@@ -1054,6 +1054,13 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
+paperizer@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/paperizer/-/paperizer-0.1.6.tgz#7a9acaf23885ce35096e25397be574ffdd758b2c"
+  integrity sha512-GhRml0rbch0kUpfpijIG2sE1DqPeGXp1bTXLKFrDz9faI0SPIa4Zjn8FrYNxV34SyDGSrstniM/qfJC0mR8mGQ==
+  dependencies:
+    vue "^3.3.4"
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
@@ -1346,14 +1353,7 @@ vue3-easy-data-table@^1.5.47:
   dependencies:
     vue "^3.2.45"
 
-vue3-print-nb@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/vue3-print-nb/-/vue3-print-nb-0.1.4.tgz#11ee3ef8857c34b403fb782da722e82ab7e20952"
-  integrity sha512-LExI7viEzplR6ZKQ2b+V4U0cwGYbVD4fut/XHvk3UPGlT5CcvIGs6VlwGp107aKgk6P8Pgx4rco3Rehv2lti3A==
-  dependencies:
-    vue "^3.0.5"
-
-vue@^3.0.5, vue@^3.2.0, vue@^3.2.45:
+vue@^3.2.0, vue@^3.2.45, vue@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
   integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==

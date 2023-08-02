@@ -58,47 +58,40 @@
                         <div id="printContent">
                             <v-container>
                                 <div class="text-center">
-                                    <div class="text-h6">Kantin Barokah</div>
-                                    <div class="text-caption">RS PKU Muhammadiyah Gamping</div>
+                                    <div class="text-header">Kantin Barokah</div>
+                                    <div class="text-subtitle">RS PKU Muhammadiyah Gamping</div>
                                 </div>
                                 <div class="text-left">
-                                    <div class="text-caption">Tanggal: {{ formattedDate(afterSubmit[0].tanggal) }}</div>
-                                    <div class="text-caption">Nomor Nota: {{ afterSubmit[0].id }}</div>
+                                    <div class="text-date">{{ formattedDate(afterSubmit[0].tanggal) }}</div>
+                                    <div class="text-id">No: {{ afterSubmit[0].id }}</div>
                                 </div>
+                                <hr class="dashed">
                                 <v-table>
-                                    <thead class="text-body-2">
+                                    <thead>
                                         <tr>
-                                            <th class="text-left">
+                                            <th class="text-item-head-left">
                                                 Barang
                                             </th>
-                                            <th class="text-left">
-                                                Harga (pcs)
-                                            </th>
-                                            <th class="text-left">
-                                                Jumlah
-                                            </th>
-                                            <th class="text-left">
+                                            <th class="text-item-head-right">
                                                 Total
-                                            </th>
-                                            <th class="text-left">
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="text-body-2">
+                                    <tbody>
                                         <tr v-for="item in totalItem" :key="item.id_barang">
-                                            <td>{{ item.barang }}</td>
-                                            <td>{{ formatCurrency(item.harga_jual) }}</td>
-                                            <td>{{ item.Jumlah }}</td>
-                                            <td>{{ formatCurrency(item.total_harga) }}</td>
+                                            <td class="text-item-left">{{ item.barang + " x" + item.Jumlah }}</td>
+                                            <td class="text-item-right">{{ formatCurrency(item.total_harga) }}</td>
                                         </tr>
                                     </tbody>
                                 </v-table>
-                                <div class="text-body-2 mt-4 text-right">Total Harga: {{ afterSubmit[0].total_harga }}</div>
+                                <hr class="dashed">
+                                <div class="text-total">Total Harga: {{ formatCurrency(afterSubmit[0].total_harga) }}
+                                </div>
                             </v-container>
                         </div>
                     </v-card>
                     <v-card-action class="mx-auto my-4">
-                        <v-btn v-print="'#printContent'" color="blue">Print</v-btn>
+                        <v-btn @click="print()" color="blue">Print</v-btn>
                     </v-card-action>
                 </v-card>
             </v-dialog>
@@ -108,13 +101,18 @@
 <script>
 import { useEnvStore } from '@/store/envStore'
 import { useTimeStore } from '@/store/timeStore'
+import { usePaperizer } from 'paperizer'
 import axios from 'axios'
-import print from 'vue3-print-nb'
 import moment from 'moment/min/moment-with-locales'
+const { paperize } = usePaperizer('printContent', {
+    features: [
+        'fullscreen=no'
+    ],
+    styles: [
+        '/print.css'
+    ]
+})
 export default {
-    directives: {
-        print
-    },
     data() {
         return {
             dialogPrint: false,
@@ -130,6 +128,9 @@ export default {
         }
     },
     methods: {
+        print() {
+            paperize()
+        },
         closeDialog() {
             this.childDialogTambah = false
             this.$emit('update-dialog-state', this.childDialogTambah)

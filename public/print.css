@@ -1,0 +1,57 @@
+.text-header{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:medium;
+    text-align: center;
+}
+.text-subtitle{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: center;
+}
+.text-date{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: left;
+    margin-top: 16px;
+}
+.text-id{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: left;
+    margin-top: 8px;
+}
+
+hr.dashed {
+    border-top: 3px dashed #000;
+}
+
+.text-item-head-left{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: left;
+}
+
+.text-item-head-right{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: right;
+}
+
+.text-item-left{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: left;
+}
+
+.text-item-right{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: right;
+}
+
+.text-total{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: right;
+    margin-top: 8px;
+}
