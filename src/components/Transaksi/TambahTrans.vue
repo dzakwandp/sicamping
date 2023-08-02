@@ -66,15 +66,15 @@
                                     <div class="text-id">No: {{ afterSubmit[0].id }}</div>
                                 </div>
                                 <hr class="dashed">
-                                <v-row>
-                                    <v-col class="text-item-head-left">
+                                <v-row class="nota-container-head">
+                                    <v-col cols="6" class="text-item-head-left">
                                         Barang
                                     </v-col>
-                                    <v-col class="text-item-head-right">
+                                    <v-col cols="6" class="text-item-head-right">
                                         Total
                                     </v-col>
                                 </v-row>
-                                <v-row v-for="item in totalItem" :key="item.id_barang">
+                                <v-row class="nota-container" v-for="item in totalItem" :key="item.id_barang">
                                     <v-col class="text-item-left">{{ item.barang + " x" + item.Jumlah }}</v-col>
                                     <v-col class="text-item-right">{{ formatCurrency(item.total_harga) }}</v-col>
                                 </v-row>

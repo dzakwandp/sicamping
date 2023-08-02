@@ -29,24 +29,28 @@ hr.dashed {
     font-family:Arial, Helvetica, sans-serif;
     font-size: xx-small;
     text-align: left;
+    display: grid;
 }
 
 .text-item-head-right{
     font-family:Arial, Helvetica, sans-serif;
     font-size: xx-small;
     text-align: right;
+    display: grid;
 }
 
 .text-item-left{
     font-family:Arial, Helvetica, sans-serif;
     font-size: xx-small;
     text-align: left;
+    display: grid;
 }
 
 .text-item-right{
     font-family:Arial, Helvetica, sans-serif;
     font-size: xx-small;
     text-align: right;
+    display: grid;
 }
 
 .text-total{
@@ -54,4 +58,13 @@ hr.dashed {
     font-size: xx-small;
     text-align: right;
     margin-top: 8px;
+}
+
+.nota-container{
+    column-count: 2;
+}
+
+.nota-container-head{
+    column-count: 2;
+    margin-bottom: 8px;
 }
