@@ -4,84 +4,129 @@
       variant="flat"
       color="blue-darken-4"
       density="comfortable"
-      class="text-white">
-      <v-card-title class="text-center text-h4 mt-4">Laporan Penjualan
-        </v-card-title>
-      <v-card-text class="text-center text-body-1">Di Sistem Kantin Barokah
-        </v-card-text>
-      <v-card-text class="text-right mt-n10">{{timeStore.formattedTime}}</v-card-text>
+      class="text-white"
+    >
+      <v-card-title class="text-center text-h4 mt-4"
+        >Laporan Penjualan
+      </v-card-title>
+      <v-card-text class="text-center text-body-1"
+        >Di Sistem Kantin Barokah
+      </v-card-text>
+      <v-card-text class="text-right mt-n10">{{
+        timeStore.formattedTime
+      }}</v-card-text>
     </v-card>
   </v-container>
-  <v-container class="w-75 ml-0">
-    <v-row class="text-body-1">
-      <v-col class="py-0">
-        <p>Tanggal Mulai</p>
-      </v-col>
-      <v-col class="py-0">
-        <p>Tanggal Akhir</p>
-      </v-col>
-      <v-col></v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <VueDatePicker class="" v-model="startDate" model-type="yyyy-MM-dd" :month-change-on-scroll=false />
-      </v-col>
-      <v-col>
-        <VueDatePicker class="" v-model="endDate" model-type="yyyy-MM-dd" :month-change-on-scroll=false />
-      </v-col>
-      <v-col>
-        <v-btn class="text-body-1" color="blue-darken-4" @click="submitReport(), loading=true">Lihat</v-btn>
-      </v-col>
-    </v-row>
+  <v-container class="d-flex ml-0 justify-space-between">
+    <div class="w-50">
+      <v-row class="text-body-1">
+        <v-col class="py-0">
+          <p>Tanggal Mulai</p>
+        </v-col>
+        <v-col class="py-0">
+          <p>Tanggal Akhir</p>
+        </v-col>
+        <v-col></v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <VueDatePicker
+            v-model="startDate"
+            auto-apply
+            model-type="yyyy-MM-dd"
+            :month-change-on-scroll="false"
+            :format="dpFormat"
+          />
+        </v-col>
+        <v-col>
+          <VueDatePicker
+            v-model="endDate"
+            auto-apply
+            model-type="yyyy-MM-dd"
+            :month-change-on-scroll="false"
+            :format="dpFormat"
+          />
+        </v-col>
+        <v-col>
+          <v-btn
+            class="text-body-1"
+            color="blue-darken-4"
+            @click="submitReport(), (loading = true)"
+            >Lihat</v-btn
+          >
+        </v-col>
+      </v-row>
+    </div>
+    <div class="w-25 justify-start pr-2">
+      <v-row> Filter Kantin </v-row>
+      <v-row>
+        <v-select
+          v-model="selectedKantin"
+          variant="outlined"
+          density="compact"
+          :items="kantin"
+          item-title="label"
+          item-value="value"
+          clearable
+        />
+      </v-row>
+    </div>
   </v-container>
   <v-container>
-    <EasyDataTable class="text-body-1" :headers="headers" :items="items" theme-color="#0D47A1" table-class-name="custom-table" :loading=loading>
+    <EasyDataTable
+      class="text-body-1"
+      :headers="headers"
+      :items="items"
+      theme-color="#0D47A1"
+      table-class-name="custom-table"
+      :loading="loading"
+    >
       <template #item-total_modal="item">
-        {{formatCurrency(item.total_modal)}}
+        {{ formatCurrency(item.total_modal) }}
       </template>
       <template #item-total_harga_jual="item">
-        {{formatCurrency(item.total_harga_jual)}}
+        {{ formatCurrency(item.total_harga_jual) }}
       </template>
       <template #item-laba="item">
-        {{formatCurrency(item.laba)}}
+        {{ formatCurrency(item.laba) }}
       </template>
     </EasyDataTable>
     <v-card class="w-50" variant="flat">
       <v-card-text v-if="enableTotal">
         <v-container class="ml-0 mt-2 pa-0">
-        <v-row>
-          <v-col class="py-0">
-            <p>Total Barang Terjual</p>
-          </v-col>
-          <v-col class="py-0">
-            <p>: {{totalLaba[0].sum_terjual}}</p>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="py-0">
-            <p>Total Modal</p>
-          </v-col>
-          <v-col class="py-0">
-            <p>: {{formatCurrency(totalLaba[0].sum_modal)}}</p>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="py-0">
-            <p>Total Harga Terjual</p>
-          </v-col>
-          <v-col class="py-0">
-            <p>: {{formatCurrency(totalLaba[0].sum_hargajual)}}</p>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="py-0">
-            <p>Total Laba</p>
-          </v-col>
-          <v-col class="py-0">
-            <p>: {{formatCurrency(totalLaba[0].sum_laba)}}</p>
-          </v-col>
-        </v-row>
-      </v-container>
+          <v-row>
+            <v-col class="py-0">
+              <p>Total Barang Terjual</p>
+            </v-col>
+            <v-col class="py-0">
+              <p>: {{ totalLaba.sum_terjual }}</p>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="py-0">
+              <p>Total Modal</p>
+            </v-col>
+            <v-col class="py-0">
+              <p>: {{ formatCurrency(totalLaba.sum_modal) }}</p>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="py-0">
+              <p>Total Harga Terjual</p>
+            </v-col>
+            <v-col class="py-0">
+              <p>: {{ formatCurrency(totalLaba.sum_hargajual) }}</p>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="py-0">
+              <p>Total Laba</p>
+            </v-col>
+            <v-col class="py-0">
+              <p>: {{ formatCurrency(totalLaba.sum_laba) }}</p>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-text>
     </v-card>
   </v-container>
@@ -118,40 +163,143 @@ export default {
         { text: "TOTAL HARGA JUAL", value: "total_harga_jual" },
         { text: "LABA", value: "laba" },
       ],
+      kantin: [
+        { label: "Kantin Bu Dar", value: "budar" },
+        { label: "Kantin Bu Cahyo", value: "cahyo" },
+        { label: "Kantin Jatim", value: "jatim" },
+        { label: "Kantin Bu Meli", value: "meli" },
+        { label: "Kantin Padang", value: "padang" },
+        { label: "Kantin IKP", value: "ikp" },
+      ],
+      selectedKantin: null,
       items: [],
+      defaultItems: [],
       totalLaba: [],
       enableTotal: false,
       loading: false,
-      startDate: moment().format('YYYY-MM-D'),
-      endDate: moment().format('YYYY-MM-D'),
+      startDate: moment().format("YYYY-MM-D"),
+      endDate: moment().format("YYYY-MM-D"),
+      dpFormat: (date) => {
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        return day + "/" + month + "/" + year;
+      },
     };
   },
   methods: {
     async submitReport() {
       try {
-        const dataReport = await axios.post(useEnvStore().apiUrl + "report/range", {
-          start_date: this.startDate,
-          end_date: this.endDate
-        })
-        this.items = dataReport.data.data
-        this.totalLaba = dataReport.data.sum_data
-        this.enableTotal = true
-        this.loading = false
-      }
-      catch (err) {
-        console.log(err)
+        const dataReport = await axios.post(
+          useEnvStore().apiUrl + "report/range",
+          {
+            start_date: this.startDate,
+            end_date: this.endDate,
+          }
+        );
+        this.items = dataReport.data.data;
+        this.defaultItems = dataReport.data.data;
+        console.log(dataReport.data.sum_data);
+        // set total data
+        this.totalLaba = this.items.reduce(
+          (acc, item) => {
+            acc.sum_terjual += item.total_terjual;
+            acc.sum_modal += item.total_modal;
+            acc.sum_hargajual += item.total_harga_jual;
+            acc.sum_laba += item.laba;
+            return acc;
+          },
+          {
+            sum_terjual: 0,
+            sum_modal: 0,
+            sum_hargajual: 0,
+            sum_laba: 0,
+          }
+        );
+        this.enableTotal = true;
+        this.loading = false;
+      } catch (err) {
+        console.log(err);
       }
     },
     formatCurrency(value) {
-      return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        maximumSignificantDigits: 3
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumSignificantDigits: 3,
       }).format(value);
-    }
+    },
+  },
+  watch: {
+    selectedKantin(val) {
+      console.log(val);
+      if (val === null) {
+        this.items = this.defaultItems;
+        // set total data
+        this.totalLaba = this.items.reduce(
+          (acc, item) => {
+            acc.sum_terjual += item.total_terjual;
+            acc.sum_modal += item.total_modal;
+            acc.sum_hargajual += item.total_harga_jual;
+            acc.sum_laba += item.laba;
+            return acc;
+          },
+          {
+            sum_terjual: 0,
+            sum_modal: 0,
+            sum_hargajual: 0,
+            sum_laba: 0,
+          }
+        );
+        return;
+      }
+      if (val === "ikp") {
+        const excluded = ["cahyo", "budar", "meli", "padang", "BBH", "jatim"];
+        this.items = this.defaultItems.filter(
+          (item) => !excluded.some((keyword) => item.barang.includes(keyword))
+        );
+        // set total data
+        this.totalLaba = this.items.reduce(
+          (acc, item) => {
+            acc.sum_terjual += item.total_terjual;
+            acc.sum_modal += item.total_modal;
+            acc.sum_hargajual += item.total_harga_jual;
+            acc.sum_laba += item.laba;
+            return acc;
+          },
+          {
+            sum_terjual: 0,
+            sum_modal: 0,
+            sum_hargajual: 0,
+            sum_laba: 0,
+          }
+        );
+      } else {
+        this.items = this.defaultItems.filter((item) =>
+          item.barang.includes(val)
+        );
+        // set total data
+        this.totalLaba = this.items.reduce(
+          (acc, item) => {
+            acc.sum_terjual += item.total_terjual;
+            acc.sum_modal += item.total_modal;
+            acc.sum_hargajual += item.total_harga_jual;
+            acc.sum_laba += item.laba;
+            return acc;
+          },
+          {
+            sum_terjual: 0,
+            sum_modal: 0,
+            sum_hargajual: 0,
+            sum_laba: 0,
+          }
+        );
+      }
+    },
   },
   mounted() {
-    console.log(this.startDate)
+    console.log(this.startDate);
   },
 };
 </script>

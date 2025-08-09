@@ -1,0 +1,79 @@
+.text-header {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: medium;
+  text-align: center;
+}
+.text-subtitle {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-small;
+  text-align: center;
+}
+.text-date {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-small;
+  text-align: left;
+  margin-top: 16px;
+}
+.text-id {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-small;
+  text-align: left;
+  margin-top: 8px;
+}
+
+hr.dashed {
+  border-top: 3px dashed #000;
+}
+
+.text-item-head-left {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-small;
+  text-align: left;
+  display: grid;
+}
+
+.text-item-head-right {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-small;
+  text-align: right;
+  display: grid;
+}
+
+.text-item-left {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+  text-align: left;
+  display: flex;
+}
+
+.text-item-right {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-small;
+  text-align: right;
+  display: grid;
+}
+
+.text-total {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-small;
+  text-align: right;
+  margin-top: 8px;
+}
+
+.barcode-container {
+  display: flex;
+  /* grid-template-columns: auto auto auto; */
+  flex-wrap: wrap;
+}
+
+.barcode-items {
+  display: flex;
+  flex-direction: column;
+  width: 30%; /* or whatever fits your layout */
+  text-align: center;
+  margin-bottom: 1rem;
+
+  /* Prevent barcode item from splitting across pages */
+  break-inside: avoid;
+  page-break-inside: avoid;
+}

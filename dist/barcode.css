@@ -1,0 +1,70 @@
+.text-header{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:medium;
+    text-align: center;
+}
+.text-subtitle{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: center;
+}
+.text-date{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: left;
+    margin-top: 16px;
+}
+.text-id{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: left;
+    margin-top: 8px;
+}
+
+hr.dashed {
+    border-top: 3px dashed #000;
+}
+
+.text-item-head-left{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: left;
+    display: grid;
+}
+
+.text-item-head-right{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: right;
+    display: grid;
+}
+
+.text-item-left{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: small;
+    text-align: left;
+    display: grid;
+}
+
+.text-item-right{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: right;
+    display: grid;
+}
+
+.text-total{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+    text-align: right;
+    margin-top: 8px;
+}
+
+.nota-container{
+    column-count: 2;
+}
+
+.nota-container-head{
+    column-count: 2;
+    margin-bottom: 8px;
+}

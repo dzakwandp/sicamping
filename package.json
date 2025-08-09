@@ -9,10 +9,13 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@chenfengyuan/vue-barcode": "2",
     "@mdi/font": "7.0.96",
-    "@vuepic/vue-datepicker": "^5.4.0",
+    "@vuepic/vue-datepicker": "^8.8.1",
     "axios": "^1.4.0",
     "core-js": "^3.29.0",
+    "jsbarcode": "3",
+    "loadash": "^1.0.0",
     "moment": "^2.29.4",
     "paperizer": "^0.1.6",
     "pinia": "^2.0.0",
