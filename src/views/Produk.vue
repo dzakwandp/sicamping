@@ -37,7 +37,7 @@
   <!-- print all barcode -->
   <v-btn
     elevation="8"
-    class="ml-12 mb-4 text-body-1"
+    class="ml-6 mb-4 text-body-1"
     color="grey"
     prepend-icon="mdi-barcode"
     @click="printAll()"
@@ -45,7 +45,7 @@
   >
   <!-- Search data pada table -->
   <v-text-field
-    class="w-50 ml-auto mx-12 mt-n14"
+    class="w-50 ml-auto pl-10 mx-12 mt-n14"
     v-model="search_value"
     label="Cari Disini"
     variant="outlined"

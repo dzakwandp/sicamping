@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex" style="height: 90vh">
+  <div class="d-flex" style="height: 89vh">
     <div
       class="d-flex flex-column h-100 w-30 justify-space-between pa-2"
       style="width: 50%"
@@ -26,14 +26,14 @@
         <v-btn variant="outlined" @click="tambahItem">Tambahkan</v-btn>
       </div> -->
       <v-text-field
-        style="height: 15px; margin-top: 10px"
+        
         variant="outlined"
         density="compact"
         label="Scanner Input"
         v-model="scannerValue"
         ref="scannerInput"
       ></v-text-field>
-      <v-table height="570px" fixed-header>
+      <v-table height="350px" fixed-header>
         <thead>
           <tr>
             <th class="text-left">Barang</th>
@@ -133,10 +133,11 @@
     <!-- item list -->
     <div class="d-flex flex-column ga-2 pa-2" style="width: 50%">
       <v-text-field
-        class="mt-5 w-75 mx-auto"
+        class="w-75 mx-auto"
         clearable
         variant="outlined"
         label="Cari Produk"
+        density="compact"
         v-model="searchValue"
       ></v-text-field>
       <div
