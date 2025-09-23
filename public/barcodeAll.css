@@ -41,7 +41,7 @@ hr.dashed {
 
 .text-item-left {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: small;
+  font-size: medium;
   text-align: left;
   display: flex;
 }
@@ -61,19 +61,22 @@ hr.dashed {
 }
 
 .barcode-container {
-  display: flex;
-  /* grid-template-columns: auto auto auto; */
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  /* gap: 2rem; */
+  padding: 1rem;
 }
 
 .barcode-items {
   display: flex;
   flex-direction: column;
-  width: 30%; /* or whatever fits your layout */
+  align-items: center; /* center horizontally */
+  justify-content: center; /* center vertically */
   text-align: center;
-  margin-bottom: 1rem;
-
-  /* Prevent barcode item from splitting across pages */
+  padding: 2rem;
+  outline: solid 1px black; /* outline for each item */
+  
+  /* Prevent breaking across pages */
   break-inside: avoid;
   page-break-inside: avoid;
 }

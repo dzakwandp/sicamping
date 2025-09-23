@@ -238,8 +238,11 @@ export default {
     },
     async getTableData() {
       try {
+        const excluded = ["cahyo", "budar", "meli", "padang", "BBH", "jatim"];
         const dataProduk = await axios.get(useEnvStore().apiUrl + "barangs/");
-        this.items = dataProduk.data.data;
+        this.items = dataProduk.data.data.filter(
+          (item) => !excluded.some((keyword) => item.barang.includes(keyword))
+        );
         console.log(this.items);
         this.loading = false;
       } catch (err) {
