@@ -26,12 +26,12 @@
         <v-btn variant="outlined" @click="tambahItem">Tambahkan</v-btn>
       </div> -->
       <v-text-field
-        
         variant="outlined"
         density="compact"
         label="Scanner Input"
         v-model="scannerValue"
         ref="scannerInput"
+        style="height: 10px"
       ></v-text-field>
       <v-table height="350px" fixed-header>
         <thead>
@@ -64,7 +64,7 @@
       <v-card-text class="text-right">
         Total Harga: {{ formatCurrency(totalBayar) }}
       </v-card-text>
-      <v-card-actions>
+      <div>
         <v-btn
           @click="submitTransaksi(), (loadingButton = true)"
           :loading="loadingButton"
@@ -128,7 +128,7 @@
             </v-card-action>
           </v-card>
         </v-dialog>
-      </v-card-actions>
+      </div>
     </div>
     <!-- item list -->
     <div class="d-flex flex-column ga-2 pa-2" style="width: 50%">

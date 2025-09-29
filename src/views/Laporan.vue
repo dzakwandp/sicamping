@@ -91,9 +91,66 @@
         {{ formatCurrency(item.laba) }}
       </template>
     </EasyDataTable>
-    <v-card class="w-50" variant="flat">
+    <v-card variant="flat">
       <v-card-text v-if="enableTotal">
-        <v-container class="ml-0 mt-2 pa-0">
+        <div class="d-flex w-100 mb-8">
+          <v-container class="ml-0 mt-2 pa-0">
+            <v-row> Total Shift Pagi </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <p>Total Modal</p>
+              </v-col>
+              <v-col class="py-0">
+                <p>: {{ formatCurrency(totals.morning.harga_beli) }}</p>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <p>Total Harga Terjual</p>
+              </v-col>
+              <v-col class="py-0">
+                <p>: {{ formatCurrency(totals.morning.harga_jual) }}</p>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <p>Total Laba</p>
+              </v-col>
+              <v-col class="py-0">
+                <p>: {{ formatCurrency(totals.morning.laba) }}</p>
+              </v-col>
+            </v-row>
+          </v-container>
+          <v-container class="ml-0 mt-2 pa-0">
+            <v-row> Total Shift Sore </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <p>Total Modal</p>
+              </v-col>
+              <v-col class="py-0">
+                <p>: {{ formatCurrency(totals.evening.harga_beli) }}</p>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <p>Total Harga Terjual</p>
+              </v-col>
+              <v-col class="py-0">
+                <p>: {{ formatCurrency(totals.evening.harga_jual) }}</p>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <p>Total Laba</p>
+              </v-col>
+              <v-col class="py-0">
+                <p>: {{ formatCurrency(totals.evening.laba) }}</p>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
+        <v-container class="w-50 ml-0 mt-2 pa-0">
+          <v-row> Total Harian </v-row>
           <v-row>
             <v-col class="py-0">
               <p>Total Barang Terjual</p>
@@ -170,10 +227,13 @@ export default {
         { label: "Kantin Bu Meli", value: "meli" },
         { label: "Kantin Padang", value: "padang" },
         { label: "Kantin IKP", value: "ikp" },
+        { label: "Kantin Boboho", value: "BBH" },
       ],
       selectedKantin: null,
       items: [],
+      barangs: [],
       defaultItems: [],
+      defaultBarangs: [],
       totalLaba: [],
       enableTotal: false,
       loading: false,
@@ -198,6 +258,15 @@ export default {
             end_date: this.endDate,
           }
         );
+        const barangReport = await axios.post(
+          useEnvStore().apiUrl + "report/barang",
+          {
+            start_date: this.startDate,
+            end_date: this.endDate,
+          }
+        );
+        this.barangs = barangReport.data.data;
+        this.defaultBarangs = barangReport.data.data;
         this.items = dataReport.data.data;
         this.defaultItems = dataReport.data.data;
         console.log(dataReport.data.sum_data);
@@ -227,8 +296,28 @@ export default {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-        maximumSignificantDigits: 3,
+        minimumFractionDigits: 0, // show no decimals
+        maximumFractionDigits: 0, // prevent rounding into fewer significant digits
       }).format(value);
+    },
+  },
+  computed: {
+    totals() {
+      const result = {
+        morning: { harga_jual: 0, harga_beli: 0, laba: 0 },
+        evening: { harga_jual: 0, harga_beli: 0, laba: 0 },
+      };
+
+      this.barangs.forEach((item) => {
+        const hour = new Date(item.created_at).getHours();
+        const group = hour >= 0 && hour < 15 ? "morning" : "evening";
+
+        result[group].harga_jual += item.harga_jual * item.jumlah;
+        result[group].harga_beli += item.harga_beli * item.jumlah;
+        result[group].laba += item.laba;
+      });
+
+      return result;
     },
   },
   watch: {
@@ -236,6 +325,7 @@ export default {
       console.log(val);
       if (val === null) {
         this.items = this.defaultItems;
+        this.barangs = this.defaultBarangs;
         // set total data
         this.totalLaba = this.items.reduce(
           (acc, item) => {
@@ -259,6 +349,10 @@ export default {
         this.items = this.defaultItems.filter(
           (item) => !excluded.some((keyword) => item.barang.includes(keyword))
         );
+        this.barangs = this.defaultBarangs.filter(
+          (item) => !excluded.some((keyword) => item.barang.includes(keyword))
+        );
+        console.log(this.barangs);
         // set total data
         this.totalLaba = this.items.reduce(
           (acc, item) => {
@@ -279,6 +373,10 @@ export default {
         this.items = this.defaultItems.filter((item) =>
           item.barang.includes(val)
         );
+        this.barangs = this.defaultBarangs.filter((item) =>
+          item.barang.includes(val)
+        );
+        console.log(this.items);
         // set total data
         this.totalLaba = this.items.reduce(
           (acc, item) => {
@@ -295,6 +393,7 @@ export default {
             sum_laba: 0,
           }
         );
+        console.log(this.totalLaba);
       }
     },
   },
