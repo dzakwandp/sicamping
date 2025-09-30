@@ -91,24 +91,15 @@
         {{ formatCurrency(item.total_harga) }}
       </template>
       <template #item-operation="item">
-        <!-- dialog view -->
-        <v-dialog v-model="dialogView">
-          <template v-slot:activator="{ props }" v-slot:item.actions="{ item }">
-            <v-btn
-              class="text-body-2"
-              prepend-icon="mdi-magnify-plus"
-              variant="text"
-              color="orange"
-              v-bind="props"
-              @click="viewPopUp(item.id)"
-              >Lihat</v-btn
-            >
-          </template>
-          <LihatTrans
-            :viewItemId="viewItemId"
-            @update-state="updateDialogTrans"
-          />
-        </v-dialog>
+        <v-btn
+          class="text-body-2"
+          prepend-icon="mdi-magnify-plus"
+          variant="text"
+          color="orange"
+          v-bind="props"
+          @click="viewPopUp(item.id)"
+          >Lihat</v-btn
+        >
         <!-- dialog hapus -->
         <v-dialog v-if="showDel" v-model="dialogDel">
           <template v-slot:activator="{ props }" v-slot:item.actions="{ item }">
@@ -139,16 +130,74 @@
             </v-card-action>
           </v-card>
         </v-dialog>
+        <v-btn
+          class="text-body-2"
+          prepend-icon="mdi-printer-outline"
+          variant="text"
+          color="blue"
+          @click="getReceiptData(item.id)"
+        >
+          Cetak
+        </v-btn>
       </template>
     </EasyDataTable>
+    <!-- dialog view -->
+    <v-dialog v-model="dialogView">
+      <LihatTrans :viewItemId="viewItemId" @update-state="updateDialogTrans" />
+    </v-dialog>
   </v-container>
+  <!-- print nota -->
+  <div class="d-none">
+    <div id="printContent">
+      <v-container>
+        <div class="text-center">
+          <div class="text-header">Kantin Barokah</div>
+          <div class="text-subtitle">RS PKU Muhammadiyah Gamping</div>
+        </div>
+        <div class="text-left">
+          <div class="text-date">
+            {{ formattedDate(receiptReprint.tanggal) }}
+          </div>
+          <div class="text-id">No: {{ receiptReprint.id }}</div>
+        </div>
+        <hr class="dashed" />
+        <v-row class="nota-container-head">
+          <v-col cols="6" class="text-item-head-left"> Barang </v-col>
+          <v-col cols="6" class="text-item-head-right"> Total </v-col>
+        </v-row>
+        <v-row
+          class="nota-container"
+          v-for="item in receiptReprint.items"
+          :key="item.id_soldItems"
+        >
+          <v-col class="text-item-left">
+            {{ item.barang + " x" + item.jumlah }}
+          </v-col>
+          <v-col class="text-item-right">
+            {{ formatCurrency(item.total_harga) }}
+          </v-col>
+        </v-row>
+        <hr class="dashed" />
+        <div class="text-total">
+          Total Harga:
+          {{ formatCurrency(receiptReprint.total_harga) }}
+        </div>
+      </v-container>
+    </div>
+  </div>
 </template>
 <script>
 import { useTimeStore } from "@/store/timeStore";
 import { useEnvStore } from "@/store/envStore";
+import { usePaperizer } from "paperizer";
 import LihatTrans from "@/components/Transaksi/LihatTransaksi.vue";
 import axios from "axios";
 import moment from "moment/min/moment-with-locales";
+import { nextTick } from "vue";
+const { paperize } = usePaperizer("printContent", {
+  features: ["fullscreen=no"],
+  styles: ["/print.css"],
+});
 export default {
   components: {
     EasyDataTable: window["vue3-easy-data-table"],
@@ -173,6 +222,7 @@ export default {
         { text: "", value: "operation" },
       ],
       items: [],
+      receiptReprint: [],
       loading: true,
       showPass: false,
       inputtedPass: "",
@@ -199,6 +249,17 @@ export default {
         console.log(err);
       }
     },
+    async getReceiptData(id) {
+      try {
+        const receiptData = await axios.get(useEnvStore().apiUrl + "txs/" + id);
+        this.receiptReprint = receiptData.data;
+        console.log(this.receiptReprint);
+        await nextTick();
+        paperize();
+      } catch (err) {
+        console.log(err);
+      }
+    },
     updateDialogTrans(newState) {
       this.dialogView = newState;
     },
@@ -215,6 +276,7 @@ export default {
     },
     viewPopUp(ItemId) {
       this.viewItemId = ItemId;
+      this.dialogView = true;
     },
     activateDelete() {
       if (this.inputtedPass === this.pass) {
