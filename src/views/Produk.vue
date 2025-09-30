@@ -126,9 +126,12 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-      <v-btn @click="(printedItem = item), print()" color="grey"
-        >Cetak Barcode</v-btn
-      >
+      <v-btn
+        @click="(printedItem = item), print()"
+        icon="mdi-barcode-scan"
+        variant="text"
+        color="grey"
+      ></v-btn>
       <div class="d-none" id="printContent">
         <span v-if="printedItem !== null" class="text-item-left">
           {{ printedItem.barang }}
